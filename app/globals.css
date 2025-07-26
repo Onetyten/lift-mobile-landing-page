@@ -3,19 +3,32 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #BFFB4E;
+  --midnightBlue: #0F0E17;
+  --light: #EEEEFB;
+
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary:var(--primary);
+  --color-dark:var(--midnightBlue);
+  --color-light: var(--light);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* --background: #0a0a0a;
+    --foreground: #ededed; */
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #BFFB4E;
+  --midnightBlue: #0F0E17;
+  --light: #EEEEFB;
+
   }
 }
 
@@ -23,4 +36,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.font-quicksand{
+  font-family: var(--font-quicksand);
+}
+.font-zendots {
+  font-family: var(--font-zendots);
 }

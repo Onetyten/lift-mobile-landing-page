@@ -10,7 +10,7 @@ export default function Home() {
         <div className="relative w-full h-full">
           <Image src={'/Assets/geometric-pattern-grid.webp'} alt="geometric" fill objectFit="cover"/>
         </div>
-      </div>
+      </div> */}
       {/* <div className="w-full h-full bg-gradient-to-t -z-20 from-primary to-light absolute top-0 ">
 
       </div> */}

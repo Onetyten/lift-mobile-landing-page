@@ -1,0 +1,46 @@
+'use client'
+import React from 'react'
+import { Swiper,SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Pagination ,Autoplay,EffectCoverflow,Navigation} from 'swiper/modules';
+import Image from 'next/image';
+import SlidePhone from './slidePhone';
+
+
+export default function CarouselSection() {
+  return (
+    <div className='min-h-screen flex w-full flex-col'>
+        {/* <div className='w-full h-14 p-6  flex justify-start'>
+            <p className='text-3xl font-semibold'>
+                Screens
+            </p>
+        </div> */}
+        <div className='flex-1 w-full flex justify-center items-center'>
+            <Swiper slidesPerView={1} navigation={true} spaceBetween={10} loop={true} pagination={{clickable: true,}} modules={[Pagination,Autoplay,EffectCoverflow,Navigation]} autoplay={{delay:2000, disableOnInteraction:false}}  coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5, slideShadows: true}} className='w-[60%] h-full flex justify-center items-center'>
+
+
+                <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/Shot1.png'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/Shot2.png'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/Shot2.png'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/Shot2.png'/>
+                </SwiperSlide>
+
+                
+            </Swiper>
+
+        </div>
+    </div>
+  )
+}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useAnimations,useCursor,useGLTF } from "@react-three/drei";
-import { useState,useRef, useMemo } from "react";
+import { useState,useRef,useEffect,useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three"; 
 
@@ -14,15 +14,17 @@ export default function PhoneModel() {
   useGLTF.preload("/3D model/s25/s25.gltf")
   const { actions } = useAnimations(animations, group)
 
+  const [rotationProgress, setRotationProgress] = useState(0)
+  const [isIntroDone, setIsIntroDone] = useState(false)
+
   const video = useMemo(()=>{
     const vid = document.createElement("video")
-    vid.src = "/video/AppScreen.webm"
+    vid.src = "/video/screenRecord.webm"
     vid.crossOrigin = "anonymous";
     vid.loop = true;
     vid.muted = true;
-    vid.playsInline = true;
+    // vid.playsInline = true;
     vid.autoplay = true;
-    vid.play();
     return vid;
 
   },[])
@@ -32,18 +34,43 @@ export default function PhoneModel() {
     texture.flipY = false
     return texture
   },[video])
-  
 
-  useFrame((state)=>{
+  useEffect(() => {
+      const start = performance.now()
+      const animate = (now: number) => {
+      const elapsed = now - start
+      const duration = 3000 // 2 seconds
+      const t = Math.min(elapsed / duration, 1)
+      setRotationProgress(t)
+
+      if (t < 1) {
+        requestAnimationFrame(animate)
+      } else {
+        setIsIntroDone(true)
+      }
+    }
+
+    requestAnimationFrame(animate)
+  }, [])
+
+  useFrame((state) => {
     if (!group.current) return
-    const { x, y } = state.pointer; // Normalized mouse position (-1 to 1)
-    group.current.rotation.y = x * 0.9
-    group.current.rotation.x = y * 0.1
+
+    if (!isIntroDone) {
+      // Animate initial rotation
+      const eased = Math.sin((rotationProgress * Math.PI) / 2)
+      group.current.rotation.y = eased * Math.PI * 2 
+      group.current.rotation.x = 0
+    } else {
+
+      const { x, y } = state.pointer // -1 to 1
+      group.current.rotation.y = x * 0.9
+      group.current.rotation.x = y * 0
+    }
   })
 
-
   return (
-    <group ref={group} dispose={null} position={[0, 0,4.86]} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
+    <group ref={group} dispose={null} position={[0, 0,4.858]} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
       <group name="Sketchfab_Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group name="root">

@@ -3,11 +3,24 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #BFFB4E;
+  --primary: #bffb4e;
   --midnightBlue: #0F0E17;
   --light: #EEEEFB;
+  --swiper-navigation-color: #0F0E17;
+  --swiper-pagination-color: #bffb4e;
 
 }
+
+@layer components {
+  .swiper-pagination-bullet {
+    @apply w-3 h-3 bg-gray-400 opacity-60 mx-1 rounded-full transition-all;
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply bg-primary text-primary opacity-100 scale-125;
+  }
+}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -19,18 +32,16 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    /* --background: #0a0a0a;
-    --foreground: #ededed; */
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #BFFB4E;
-  --midnightBlue: #0F0E17;
-  --light: #EEEEFB;
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: #BFFB4E;
+    --midnightBlue: #EEEEFB;
+    --light: #0F0E17;
 
   }
-}
+} */
 
 body {
   background: var(--background);

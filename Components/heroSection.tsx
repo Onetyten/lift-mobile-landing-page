@@ -2,8 +2,10 @@
 import React, { Suspense } from 'react'
 import LinkButton from './linkButton'
 import { Canvas } from '@react-three/fiber'
-import PhoneModel from '@/public/3D model/s25/phoneModel'
+// import PhoneModel from '@/public/3D model/s25/phoneModel'
 import S24Model from '@/public/3D model/s24/S24Model'
+import {motion} from 'framer-motion' 
+import HeroTitle from './HeroTitle'
 
 
 
@@ -15,9 +17,9 @@ export default function HeroSection() {
         <div className="flex-1 object-contain flex-col relative flex justify-center items-center ">
 
           {/* <video muted autoPlay loop src="/video/AppScreen.webm" className='w-64 mt-6 h-auto object-contain'></video> */}
-          <p className='font-light text-4xl sm:text-5xl lg:hidden mt-16'>
+          <motion.p initial={{opacity:0,y:20}} animate={{opacity:100,y:0}} transition={{delay:0,duration:0.8}}  className='font-light text-4xl sm:text-5xl lg:hidden mt-16'>
                 LIFT MOBILE
-          </p>
+          </motion.p>
 
 
           <div className='h-[600px] lg:h-[700px] 2xl:h-[850px]  w-full'>
@@ -40,13 +42,17 @@ export default function HeroSection() {
             
             <div className=' relative h-full lg:w-72 pointer-events-none' >
                 
-              <p className='font-light hidden lg:block text-5xl absolute 2xl:top-24 2xl:-left-72 top-20 -left-64'>
-                Lift mobile
-              </p>
+              <HeroTitle/>
+
+
               <div className='w-72 sm:w-sm  lg:w-72 lg:absolute 2xl:bottom-56 2xl:-right-[22rem] bottom-52 -right-80 flex flex-col gap-3'>
-                <p className='text-sm text-center lg:text-justify'>
+                <motion.div initial={{width:0}} animate={{width:'100%'}} transition={{delay:1,duration:0.5}} className='w-full h-0.5 mt-3 bg-dark hidden lg:block'>
+        
+                </motion.div>
+                <motion.p initial={{opacity:0,y:-20}} animate={{opacity:100,y:0}} transition={{delay:1.5,duration:0.6}} className='text-sm text-center lg:text-justify'>
                   A user-driven car rental platform that that empowers you to rent out your idle vehicle for extra income or drive your dream car without the commitment. Enjoy a seamless, secure, and user-friendly experience designed for both owners and renters.
-                </p>
+                </motion.p>
+                
 
               </div>
             </div>

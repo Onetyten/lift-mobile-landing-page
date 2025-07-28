@@ -18,8 +18,8 @@ export default function Home() {
       </div>
       <Navbar/>
       <HeroSection/>
-      {/* <CarouselSection/>
-      <StackPage/> */}
+      <CarouselSection/>
+      <StackPage/>
       
 
 

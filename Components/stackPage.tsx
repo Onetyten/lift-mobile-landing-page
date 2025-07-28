@@ -8,51 +8,73 @@ import Image from 'next/image';
 import StackCard from './stackCard';
 
 export default function StackPage() {
-  return (
-    <div className='flex justify-between w-full min-h-screen box-border '>
+  const stackIconLIst = [
+    {name:'Expo',src:'/Icons/Expo.webp'},
+    {name:'Express',src:'/Icons/Express.webp'},
+    {name:'React native',src:'/Icons/ReactNative.webp'},
+    {name:'React',src:'/Icons/react.webp'},
+    {name:'Bcrypt',src:'/Icons/Bcrypt.webp'},
+    {name:'Node',src:'/Icons/Node.webp'},
+    {name:'Nativewind',src:'/Icons/nativewind.webp'},
+    {name:'MongoDB',src:'/Icons/mongodb.webp'},
+    {name:'Git',src:'/Icons/Git.webp'},
+  ]
+  
+  const cardDetails=[
+    {title:'Unlock Idle Assets', desc:'The average car is idle 95% of the time, sitting in parking lots or driveways, Lift mobile is significant opportunity for owners to monetize their vehicles and rent out their idle cars, turning a depreciating asset into a source of income.'},
+    {title:'Drive Your Dream Car', desc:'Rent your dream car without the commitment of ownership, enjoying flexibility and freedom on your terms'},
+    {title:'Seamless Experience', desc:'Seamlessly rent or share your car with a user-friendly platform, offering secure bookings, real-time availability, and hassle-free access to a wide range of vehicles tailored to your needs.'},
+  ]
 
-      <div className='h-screen flex flex-col justify-end items-start p-6 gap-8'>
-        <LinkIcon name='Github' icon={<FaGithub size={20} />} src ={'/'}/>
-        <LinkIcon name='Email' icon={<GrMail size={20} />} src ={'/'}/>
-        <LinkIcon name='Phone' icon={<FaPhone size={20} />} src ={'/'}/>
-        <LinkIcon name='Whatsapp' icon={<FaWhatsapp size={20} />} src ={'/'}/>
-        <LinkIcon name='Address' icon={<IoMdPin size={20} />} src ={'/'}/>
-        <LinkIcon name='Linkedin' icon={<FaLinkedin size={20} />} src ={'/'}/>
-        <LinkIcon name='X' icon={<FaXTwitter size={20} />} src ={'/'}/>
+
+
+  return (
+    <div className='flex flex-col sm:flex-row justify-between w-full min-h-screen '>
+
+      {/* contact section */}
+      <div className='sm:min-h-screen sm:order-1 order-3 w-40 flex flex-col justify-end items-start p-6 gap-8'>
+        <LinkIcon name='Github' icon={<FaGithub size={20} />} src ={"https://github.com/Onetyten/Lift-mobile"}/>
+        <LinkIcon name='Email' icon={<GrMail size={20} />} src ={"mailto:labaekaabdulrazaq@gmail.com"}/>
+        <LinkIcon name='Phone' icon={<FaPhone size={20} />} src ={"tel:+2349155073769"}/>
+        <LinkIcon name='Whatsapp' icon={<FaWhatsapp size={20} />} src ={"https://wa.me/+2347089126752"}/>
+        <LinkIcon name='Address' icon={<IoMdPin size={20} />} src ={"https://maps.app.goo.gl/BtMczikoAdhF55o27"}/>
+        <LinkIcon name='Linkedin' icon={<FaLinkedin size={20} />} src ={"https://www.linkedin.com/in/lab-adetayo"}/>
+        <LinkIcon name='X' icon={<FaXTwitter size={20} />} src ={"https://x.com/Onetyten_exe"}/>
       </div>
 
-      <div className='h-screen flex-1 w-full flex justify-center items-center'>
 
 
-        <div className='w-xl h-[576px] absolute'>
+      {/* card section */}
+      <div className='min-h-screen sm:order-2 order-1 flex-1 flex  justify-center items-center'>
+
+
+        <div className='w-xl h-[576px] -z-10 absolute'>
           <Image src={"/logo/logo2.webp"} alt='' objectFit='contain' fill/>
         </div>
 
-        <div className='flex justify-center items-center gap-6 px-36'>
+        <div className='flex justify-center flex-col my-10 lg:flex-row sm:items-stretch gap-6'>
+          {cardDetails.map((item,index:number)=>{
+            return(
+              <StackCard key={index} title={item.title} desc={item.desc} delay={index*0.3}/>
+            )
+          })}
           
-          <StackCard/>
-          <StackCard/>
-          <StackCard/>
 
 
         </div>
 
       </div>
 
-
-
-
-
-      <div className='h-screen flex flex-col justify-start items-start p-6 pt-20 gap-8'>
-        <StackIcon src='/Icons/Expo.webp' name='Expo'/>
-        <StackIcon src='/Icons/Express.webp' name='Express'/>
-        <StackIcon src='/Icons/ReactNative.webp' name='React Native'/>
-        <StackIcon src='/Icons/react.webp' name='React'/>
-        <StackIcon src='/Icons/Bcrypt.webp' name='Bcrypt'/>
-        <StackIcon src='/Icons/Node.webp' name='Node'/>
-        <StackIcon src='/Icons/nativewind.webp' name='Nativewind'/>
-        <StackIcon src='/Icons/mongodb.webp' name='MongoDB'/>
-        <StackIcon src='/Icons/Git.webp' name='Git'/>
+      {/* icon section */}
+      <div className='sm:min-h-screen sm:order-3 order-2 w-screen sm:w-40 flex justify-end items-start '>
+        <div className='h-full flex flex-col justify-start items-start p-6 pt-20 gap-8'>
+          {stackIconLIst.map((item,index)=>{
+            return(
+              <StackIcon key={index} src={item.src} name={item.name}/>
+            )
+          })}
+        </div>
+        
 
       </div>
 

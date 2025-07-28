@@ -17,7 +17,7 @@
   }
 
   .swiper-pagination-bullet-active {
-    @apply bg-primary text-primary opacity-100 scale-125;
+    @apply bg-primary text-primary opacity-100;
   }
 }
 

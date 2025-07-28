@@ -21,19 +21,43 @@ export default function CarouselSection() {
 
 
                 <SwiperSlide className='flex justify-center items-center'>
-                    <SlidePhone src='/phone screen/Shot1.png'/>
+                    <SlidePhone src='/phone screen/shot1.webp'/>
                 </SwiperSlide>
 
                  <SwiperSlide className='flex justify-center items-center'>
-                    <SlidePhone src='/phone screen/Shot2.png'/>
+                    <SlidePhone src='/phone screen/shot2.webp'/>
                 </SwiperSlide>
 
                  <SwiperSlide className='flex justify-center items-center'>
-                    <SlidePhone src='/phone screen/Shot2.png'/>
+                    <SlidePhone src='/phone screen/shot3.webp'/>
                 </SwiperSlide>
 
                  <SwiperSlide className='flex justify-center items-center'>
-                    <SlidePhone src='/phone screen/Shot2.png'/>
+                    <SlidePhone src='/phone screen/shot4.webp'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/shot5.webp'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/shot6.webp'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/shot7.webp'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/shot8.webp'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/shot9.webp'/>
+                </SwiperSlide>
+
+                 <SwiperSlide className='flex justify-center items-center'>
+                    <SlidePhone src='/phone screen/shot10.webp'/>
                 </SwiperSlide>
 
                 

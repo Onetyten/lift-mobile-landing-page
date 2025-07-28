@@ -13,9 +13,7 @@ export default function StackPage() {
     {name:'Express',src:'/Icons/Express.webp'},
     {name:'React native',src:'/Icons/ReactNative.webp'},
     {name:'React',src:'/Icons/react.webp'},
-    {name:'Bcrypt',src:'/Icons/Bcrypt.webp'},
     {name:'Node',src:'/Icons/Node.webp'},
-    {name:'Nativewind',src:'/Icons/nativewind.webp'},
     {name:'MongoDB',src:'/Icons/mongodb.webp'},
     {name:'Git',src:'/Icons/Git.webp'},
   ]
@@ -29,17 +27,17 @@ export default function StackPage() {
 
 
   return (
-    <div className='flex flex-col sm:flex-row justify-between w-full min-h-screen '>
+    <div className='flex flex-row flex-wrap justify-between w-full min-h-screen '>
 
       {/* contact section */}
-      <div className='sm:min-h-screen sm:order-1 order-3 w-40 flex flex-col justify-end items-start p-6 gap-8'>
-        <LinkIcon name='Github' icon={<FaGithub size={20} />} src ={"https://github.com/Onetyten/Lift-mobile"}/>
-        <LinkIcon name='Email' icon={<GrMail size={20} />} src ={"mailto:labaekaabdulrazaq@gmail.com"}/>
-        <LinkIcon name='Phone' icon={<FaPhone size={20} />} src ={"tel:+2349155073769"}/>
-        <LinkIcon name='Whatsapp' icon={<FaWhatsapp size={20} />} src ={"https://wa.me/+2347089126752"}/>
-        <LinkIcon name='Address' icon={<IoMdPin size={20} />} src ={"https://maps.app.goo.gl/BtMczikoAdhF55o27"}/>
-        <LinkIcon name='Linkedin' icon={<FaLinkedin size={20} />} src ={"https://www.linkedin.com/in/lab-adetayo"}/>
-        <LinkIcon name='X' icon={<FaXTwitter size={20} />} src ={"https://x.com/Onetyten_exe"}/>
+      <div className='sm:min-h-screen sm:order-1 order-2 w-40 flex flex-col justify-center items-end p-6 gap-8'>
+        <LinkIcon name='Github' icon={<FaGithub size={24} />} src ={"https://github.com/Onetyten/Lift-mobile"}/>
+        <LinkIcon name='Email' icon={<GrMail size={24} />} src ={"mailto:labaekaabdulrazaq@gmail.com"}/>
+        <LinkIcon name='Phone' icon={<FaPhone size={24} />} src ={"tel:+2349155073769"}/>
+        <LinkIcon name='Whatsapp' icon={<FaWhatsapp size={24} />} src ={"https://wa.me/+2347089126752"}/>
+        <LinkIcon name='Address' icon={<IoMdPin size={24} />} src ={"https://maps.app.goo.gl/BtMczikoAdhF55o27"}/>
+        <LinkIcon name='Linkedin' icon={<FaLinkedin size={24} />} src ={"https://www.linkedin.com/in/lab-adetayo"}/>
+        <LinkIcon name='X' icon={<FaXTwitter size={24} />} src ={"https://x.com/Onetyten_exe"}/>
       </div>
 
 
@@ -66,8 +64,8 @@ export default function StackPage() {
       </div>
 
       {/* icon section */}
-      <div className='sm:min-h-screen sm:order-3 order-2 w-screen sm:w-40 flex justify-end items-start '>
-        <div className='h-full flex flex-col justify-start items-start p-6 pt-20 gap-8'>
+      <div className='sm:min-h-screen sm:order-3 order-3 sm:w-40 flex justify-end items-start '>
+        <div className='h-full flex flex-col justify-center items-start p-6 sm:pt-20 gap-8'>
           {stackIconLIst.map((item,index)=>{
             return(
               <StackIcon key={index} src={item.src} name={item.name}/>

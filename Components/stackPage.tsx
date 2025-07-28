@@ -27,7 +27,7 @@ export default function StackPage() {
 
 
   return (
-    <div className='flex flex-row flex-wrap justify-between w-full min-h-screen '>
+    <div className='flex flex-row flex-wrap justify-between w-full min-h-screen mb-10 sm:mb-0 '>
 
       {/* contact section */}
       <div className='sm:min-h-screen sm:order-1 order-2 w-36 flex flex-col pl-2 justify-center items-end p-2 sm:p-6 gap-8'>

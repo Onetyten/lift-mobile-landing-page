@@ -30,7 +30,7 @@ export default function StackPage() {
     <div className='flex flex-row flex-wrap justify-between w-full min-h-screen '>
 
       {/* contact section */}
-      <div className='sm:min-h-screen sm:order-1 order-2 w-40 flex flex-col justify-center items-end p-6 gap-8'>
+      <div className='sm:min-h-screen sm:order-1 order-2 w-36 flex flex-col pl-2 justify-center items-end p-2 sm:p-6 gap-8'>
         <LinkIcon name='Github' icon={<FaGithub size={24} />} src ={"https://github.com/Onetyten/Lift-mobile"}/>
         <LinkIcon name='Email' icon={<GrMail size={24} />} src ={"mailto:labaekaabdulrazaq@gmail.com"}/>
         <LinkIcon name='Phone' icon={<FaPhone size={24} />} src ={"tel:+2349155073769"}/>
@@ -43,7 +43,7 @@ export default function StackPage() {
 
 
       {/* card section */}
-      <div className='min-h-screen sm:order-2 order-1 flex-1 flex  justify-center items-center'>
+      <div className='min-h-screen sm:order-2 order-1 flex w-screen sm:w-auto  justify-center items-center'>
 
 
         <div className='w-xl h-[576px] -z-10 absolute'>
@@ -64,17 +64,14 @@ export default function StackPage() {
       </div>
 
       {/* icon section */}
-      <div className='sm:min-h-screen sm:order-3 order-3 sm:w-40 flex justify-end items-start '>
-        <div className='h-full flex flex-col justify-center items-start p-6 sm:pt-20 gap-8'>
+       <div className='sm:min-h-screen sm:order-3 order-3 w-36 flex flex-col pr-2 justify-center items-start p-2 sm:p-6 gap-8'>
           {stackIconLIst.map((item,index)=>{
             return(
               <StackIcon key={index} src={item.src} name={item.name}/>
             )
           })}
-        </div>
-        
+       </div>
 
-      </div>
 
     </div>
   )

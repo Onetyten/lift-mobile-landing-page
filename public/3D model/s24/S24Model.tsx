@@ -1,7 +1,7 @@
 'use client'
 
-import { useAnimations,useCursor,useGLTF } from "@react-three/drei";
-import { useState,useRef,useEffect,useMemo } from "react";
+import { useCursor,useGLTF } from "@react-three/drei";
+import { useState,useRef,useEffect} from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three"; 
 
@@ -11,33 +11,52 @@ import * as THREE from "three";
 export default function S24Model() {
     const group = useRef<THREE.Group>(null!)
     const [hovered,setHovered] = useState(false)
+    const videoRef = useRef<HTMLVideoElement | null>(null)
     useCursor(hovered)
   
-    const { nodes, materials, animations } = useGLTF('/3D model/s24/s24.gltf')
+    const { nodes, materials} = useGLTF('/3D model/s24/s24.gltf')
     useGLTF.preload("/3D model/s24/s24.gltf")
-    const { actions } = useAnimations(animations, group)
-  
     const [rotationProgress, setRotationProgress] = useState(0)
     const [isIntroDone, setIsIntroDone] = useState(false)
+    const [videoTexture, setVideoTexture] = useState<THREE.VideoTexture | null>(null)
 
-      const video = useMemo(()=>{
-        const vid = document.createElement("video")
-        vid.src = "/video/screenRecord.webm"
-        vid.crossOrigin = "anonymous";
-        vid.loop = true;
-        vid.muted = true;
-        // vid.playsInline = true;
-        vid.autoplay = true;
-        return vid;
-    
-      },[])
-    
-      const videoTexture = useMemo(()=>{
-        const texture = new THREE.VideoTexture(video) as THREE.VideoTexture
-        texture.flipY = false
-        return texture
-      },[video])
-    
+
+      useEffect(() => {
+        const createVideoTexture = () => {
+            const vid = document.createElement("video")
+            vid.src = "/video/screenRecord.webm"
+            vid.crossOrigin = "anonymous"
+            vid.loop = true
+            vid.muted = true
+            vid.playsInline = true
+            let playAttempted = false
+
+            const handleCanPlay = () => {
+                if (!playAttempted) {
+                    playAttempted = true
+                    vid.play().catch(error => {
+                        console.warn("Video play error:", error)
+                    })
+                }
+            }
+
+            vid.addEventListener('canplay', handleCanPlay)
+            const texture = new THREE.VideoTexture(vid)
+            texture.flipY = false
+            videoRef.current = vid
+            setVideoTexture(texture)
+            return () => {
+                vid.removeEventListener('canplay', handleCanPlay)
+                vid.pause()
+                vid.remove()
+            }
+        }
+
+        const cleanup = createVideoTexture()
+
+        return cleanup
+      }, [])
+
       useEffect(() => {
           const start = performance.now()
           const animate = (now: number) => {
@@ -91,19 +110,6 @@ export default function S24Model() {
         <meshStandardMaterial map={videoTexture} toneMapped={false} />
       </mesh>
     </group>
-    
-
-    // <group {...props} dispose={null}>
-    //   <group position={[0.292, 0.467, -0.09]} rotation={[-Math.PI, 0, -Math.PI]} scale={[1, 1, 0.114]}>
-    //     <mesh geometry={nodes.Object_0.geometry} material={materials['Material.001']} />
-    //     <mesh geometry={nodes.Object_0_1.geometry} material={materials.Silver} />
-    //     <mesh geometry={nodes.Object_0_2.geometry} material={materials['Material.004']} />
-    //     <mesh geometry={nodes.Object_0_3.geometry} material={materials.Flash} />
-    //     <mesh geometry={nodes.Object_0_4.geometry} material={materials.Lens} />
-    //     <mesh geometry={nodes.Object_0_5.geometry} material={materials.Screen} />
-    //   </group>
-    //   <mesh geometry={nodes.screen.geometry} material={materials.Screen} position={[0.292, 0.467, -0.09]} rotation={[-Math.PI, 0, -Math.PI]} scale={[1, 1, 0.114]} />
-    // </group>
   )
 }
 

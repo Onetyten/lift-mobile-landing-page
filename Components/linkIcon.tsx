@@ -12,7 +12,7 @@ interface propTypes{
 export default function LinkIcon(props:propTypes){
     const {name,src,icon} = props
   return (
-    <motion.div initial={{y:30,opacity:0}} whileInView={{y:0,opacity:100}} viewport={{once:false,amount:0.5}} transition={{duration:1}}>
+    <motion.div initial={{y:30,opacity:0}} whileInView={{y:0,opacity:100}} viewport={{once:true}} transition={{duration:1}}>
         <Link  href={src} target='_blank'  className='flex text-dark justify-center items-center gap-2 hover:scale-150 duration-300 '>
             <div className='relative'>
                 {icon}

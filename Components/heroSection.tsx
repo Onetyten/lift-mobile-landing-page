@@ -3,9 +3,9 @@ import React, { Suspense } from 'react'
 import LinkButton from './linkButton'
 import { Canvas } from '@react-three/fiber'
 // import PhoneModel from '@/public/3D model/s25/phoneModel'
-import S24Model from '@/public/3D model/s24/S24Model'
 import {motion} from 'framer-motion' 
 import HeroTitle from './HeroTitle'
+import PhoneModel from '@/public/3D model/s25/phoneModel'
 
 
 
@@ -28,8 +28,7 @@ export default function HeroSection() {
               <directionalLight intensity={3} position={[5, 5, 5]} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024}/>
               <spotLight intensity={0.8} position={[2, 5, 5]} angle={0.3} penumbra={1} castShadow/>
               <Suspense fallback={null}>
-                  {/* <PhoneModel/> */}
-                  <S24Model/>
+                  <PhoneModel/>
               </Suspense>
             </Canvas>
           </div>

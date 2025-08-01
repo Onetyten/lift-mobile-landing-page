@@ -1,45 +1,126 @@
 'use client'
 
-import { useAnimations,useCursor,useGLTF } from "@react-three/drei";
-import { useState,useRef,useEffect,useMemo } from "react";
+import { useAnimations, useCursor, useGLTF } from "@react-three/drei";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three"; 
 
 export default function PhoneModel() {
   const group = useRef<THREE.Group>(null!)
-  const [hovered,setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
   useCursor(hovered)
 
   const { nodes, materials, animations } = useGLTF('/3D model/s25/s25.gltf')
-  useGLTF.preload("/3D model/s25/s25.gltf")
   const { actions } = useAnimations(animations, group)
 
   const [rotationProgress, setRotationProgress] = useState(0)
   const [isIntroDone, setIsIntroDone] = useState(false)
+  const [videoTexture, setVideoTexture] = useState<THREE.VideoTexture | null>(null)
+  const [isVideoReady, setIsVideoReady] = useState(false)
+  const [screenMaterial, setScreenMaterial] = useState<THREE.Material | null>(null)
 
-  const video = useMemo(()=>{
-    const vid = document.createElement("video")
-    vid.src = "/video/screenRecord.webm"
-    vid.crossOrigin = "anonymous";
-    vid.loop = true;
-    vid.muted = true;
-    // vid.playsInline = true;
-    vid.autoplay = true;
-    return vid;
-
-  },[])
-
-  const videoTexture = useMemo(()=>{
-    const texture = new THREE.VideoTexture(video) as THREE.VideoTexture
-    texture.flipY = false
-    return texture
-  },[video])
-
+  // Enhanced video texture creation with proper loading
   useEffect(() => {
-      const start = performance.now()
-      const animate = (now: number) => {
+    const createVideoTexture = () => {
+      const vid = document.createElement("video")
+      vid.src = "/video/screenRecord.webm"
+      vid.crossOrigin = "anonymous"
+      vid.loop = true
+      vid.muted = true
+      vid.playsInline = true
+      vid.preload = "metadata"
+      vid.autoplay = false // Better control over playback
+      videoRef.current = vid
+
+      const handleLoadedData = () => {
+        console.log("Video loaded, creating texture")
+        const texture = new THREE.VideoTexture(vid)
+        texture.flipY = false
+        texture.minFilter = THREE.LinearFilter
+        texture.magFilter = THREE.LinearFilter
+        texture.format = THREE.RGBAFormat
+        texture.colorSpace = THREE.SRGBColorSpace
+        texture.generateMipmaps = false
+        setVideoTexture(texture)
+        
+        // Create optimized material for screen
+        const newMaterial = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: false,
+          alphaTest: 0,
+          side: THREE.FrontSide,
+          toneMapped: false
+        })
+        setScreenMaterial(newMaterial)
+        
+        setIsVideoReady(true)
+        
+        // Start video playback
+        vid.play().catch(error => {
+          console.warn("Video play error:", error)
+          // Fallback: try to play on user interaction
+          const playOnInteraction = () => {
+            vid.play().then(() => {
+              document.removeEventListener('click', playOnInteraction)
+              document.removeEventListener('touchstart', playOnInteraction)
+            }).catch(console.warn)
+          }
+          document.addEventListener('click', playOnInteraction)
+          document.addEventListener('touchstart', playOnInteraction)
+        })
+      }
+
+      const handleCanPlay = () => {
+        console.log("Video can play")
+      }
+      const handleError = (e: Event) => {
+            console.error("Video error:", e)
+
+            const fallbackMaterial = new THREE.MeshBasicMaterial({
+              color: 0x000000,
+              transparent: false,
+              toneMapped: false
+            })
+            setScreenMaterial(fallbackMaterial)
+      }
+
+      const handleLoadStart = () => {
+        console.log("Video loading started")
+      }
+
+      vid.addEventListener('loadeddata', handleLoadedData)
+      vid.addEventListener('canplay', handleCanPlay)
+      vid.addEventListener('error', handleError)
+      vid.addEventListener('loadstart', handleLoadStart)
+      vid.load()
+
+      return () => {
+        vid.removeEventListener('loadeddata', handleLoadedData)
+        vid.removeEventListener('canplay', handleCanPlay)
+        vid.removeEventListener('error', handleError)
+        vid.removeEventListener('loadstart', handleLoadStart)
+        vid.pause()
+        vid.src = ""
+        if (videoTexture) {
+          videoTexture.dispose()
+        }
+        if (screenMaterial) {
+          screenMaterial.dispose()
+        }
+      }
+    }
+
+    const cleanup = createVideoTexture()
+    return cleanup
+  }, [])
+
+  // Intro animation
+  useEffect(() => {
+    const start = performance.now()
+    const animate = (now: number) => {
       const elapsed = now - start
-      const duration = 3000 // 2 seconds
+      const duration = 3000 // 3 seconds
       const t = Math.min(elapsed / duration, 1)
       setRotationProgress(t)
 
@@ -53,24 +134,42 @@ export default function PhoneModel() {
     requestAnimationFrame(animate)
   }, [])
 
+  // Animation frame logic
   useFrame((state) => {
     if (!group.current) return
 
     if (!isIntroDone) {
-      // Animate initial rotation
+      // Smooth intro rotation with easing
       const eased = Math.sin((rotationProgress * Math.PI) / 2)
       group.current.rotation.y = eased * Math.PI * 2 
       group.current.rotation.x = 0
     } else {
-
+      // Interactive rotation based on mouse position
       const { x, y } = state.pointer // -1 to 1
-      group.current.rotation.y = x * 0.9
+      group.current.rotation.y = x * 0.3
       group.current.rotation.x = y * 0
     }
   })
 
+  // Memoized video texture fallback (kept for compatibility)
+  const fallbackVideoTexture = useMemo(() => {
+    if (!isVideoReady || !videoRef.current) return null
+    
+    const texture = new THREE.VideoTexture(videoRef.current)
+    texture.flipY = false
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.generateMipmaps = false
+    return texture
+  }, [isVideoReady])
+
   return (
-    <group ref={group} dispose={null} position={[0, 0,4.858]} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
+    <group 
+      ref={group} 
+      dispose={null} 
+      position={[0, 0, 4.858]} 
+      onPointerOver={() => setHovered(true)} 
+      onPointerOut={() => setHovered(false)}
+    >
       <group name="Sketchfab_Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group name="root">
@@ -118,8 +217,16 @@ export default function PhoneModel() {
                 <mesh name="Object_20" geometry={(nodes.Object_20 as THREE.Mesh).geometry} material={materials.Front_Cam_Body} />
               </group>
               <group name="Display_ActiveArea_9" position={[0, -0.081, 0.004]}>
-                <mesh name="Object_22" geometry={(nodes.Object_22 as THREE.Mesh).geometry} material={materials.Display_ActiveArea}>
-                  <meshStandardMaterial map={videoTexture} toneMapped={false} />
+                <mesh name="Object_22" geometry={(nodes.Object_22 as THREE.Mesh).geometry}>
+                  {isVideoReady && screenMaterial ? (
+                    <primitive object={screenMaterial} attach="material" />
+                  ) : (
+                    <meshStandardMaterial 
+                      map={fallbackVideoTexture} 
+                      toneMapped={false}
+                      color={0x000000}
+                    />
+                  )}
                 </mesh>
               </group>
               <group name="Camera_Hole_Glass_10" position={[0, -0.081, 0.004]}>
@@ -175,4 +282,4 @@ export default function PhoneModel() {
   )
 }
 
-useGLTF.preload('/s25.gltf')
+useGLTF.preload('/3D model/s25/s25.gltf')

@@ -27,10 +27,10 @@ export default function StackPage() {
 
 
   return (
-    <div className='flex flex-row flex-wrap justify-between w-full min-h-screen mb-10 sm:mb-0 '>
+    <div className='flex flex-row flex-wrap justify-center w-full min-h-screen mb-10 sm:mb-0 '>
 
       {/* contact section */}
-      <div className='sm:min-h-screen sm:order-1 order-2 w-36 flex flex-col pl-2 justify-center items-end p-2 sm:p-6 gap-8'>
+      {/* <div className='sm:min-h-screen sm:order-1 order-2 w-36 flex flex-col pl-2 justify-center items-end p-2 sm:p-6 gap-8'>
         <LinkIcon name='Github' icon={<FaGithub size={24} />} src ={"https://github.com/Onetyten/Lift-mobile"}/>
         <LinkIcon name='Email' icon={<GrMail size={24} />} src ={"mailto:labaekaabdulrazaq@gmail.com"}/>
         <LinkIcon name='Phone' icon={<FaPhone size={24} />} src ={"tel:+2349155073769"}/>
@@ -38,12 +38,12 @@ export default function StackPage() {
         <LinkIcon name='Address' icon={<IoMdPin size={24} />} src ={"https://maps.app.goo.gl/BtMczikoAdhF55o27"}/>
         <LinkIcon name='Linkedin' icon={<FaLinkedin size={24} />} src ={"https://www.linkedin.com/in/lab-adetayo"}/>
         <LinkIcon name='X' icon={<FaXTwitter size={24} />} src ={"https://x.com/Onetyten_exe"}/>
-      </div>
+      </div> */}
 
 
 
       {/* card section */}
-      <div className='min-h-screen sm:order-2 order-1 flex w-screen sm:w-auto  justify-center items-center'>
+      <div className='min-h-screen flex w-screen sm:w-auto  justify-center items-center'>
 
 
         <div className='w-xl h-[576px] -z-10 absolute'>
@@ -64,13 +64,13 @@ export default function StackPage() {
       </div>
 
       {/* icon section */}
-       <div className='sm:min-h-screen sm:order-3 order-3 w-36 flex flex-col pr-2 justify-center items-start p-2 sm:p-6 gap-8'>
+       {/* <div className='sm:min-h-screen sm:order-3 order-3 w-36 flex flex-col pr-2 justify-center items-start p-2 sm:p-6 gap-8'>
           {stackIconLIst.map((item,index)=>{
             return(
               <StackIcon key={index} src={item.src} name={item.name}/>
             )
           })}
-       </div>
+       </div> */}
 
 
     </div>

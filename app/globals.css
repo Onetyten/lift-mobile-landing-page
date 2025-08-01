@@ -25,6 +25,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --breakpoint-xs:25rem;
   --color-primary:var(--primary);
   --color-dark:var(--midnightBlue);
   --color-light: var(--light);

@@ -2,10 +2,11 @@
 import React, { Suspense } from 'react'
 import LinkButton from './linkButton'
 import { Canvas } from '@react-three/fiber'
-// import PhoneModel from '@/public/3D model/s25/phoneModel'
 import {motion} from 'framer-motion' 
 import HeroTitle from './HeroTitle'
 import PhoneModel from '@/public/3D model/s25/phoneModel'
+import {Spinner} from "react-activity"
+import "react-activity/dist/library.css";
 
 
 
@@ -23,14 +24,22 @@ export default function HeroSection() {
 
 
           <div className='h-[600px] lg:h-[700px] 2xl:h-[850px]  w-full'>
-            <Canvas className='h-full'>
-              <ambientLight intensity={2}/>
-              <directionalLight intensity={3} position={[5, 5, 5]} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024}/>
-              <spotLight intensity={0.8} position={[2, 5, 5]} angle={0.3} penumbra={1} castShadow/>
-              <Suspense fallback={null}>
-                  <PhoneModel/>
-              </Suspense>
-            </Canvas>
+            <Suspense 
+              fallback={
+              <div className=' w-full flex justify-center items-center h-full'>
+                <div className='bg-gray-300/10 backdrop-blur-3xl  h-[80%] w-60 sm:w-68 2xl:w-96 flex flex-col gap-4 justify-center items-center'>
+                  <p className='text-sm'>Loading 3d model</p>
+                  <Spinner size={20}/>
+                </div>
+              </div>}>
+              <Canvas className='h-full'>
+                <ambientLight intensity={2}/>
+                <directionalLight intensity={3} position={[5, 5, 5]} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024}/>
+                <spotLight intensity={0.8} position={[2, 5, 5]} angle={0.3} penumbra={1} castShadow/>
+                <PhoneModel/>         
+              </Canvas>
+            </Suspense>
+
           </div>
           
       
